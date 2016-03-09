@@ -22,6 +22,14 @@ elk-packages:
       - elasticsearch
       - xxxxxxxx
 
+# Most CentOS packages don't start or enable themselves automatically after a 
+# reboot. You have to specifically start and enable them.
+elastic-search-service:
+https://docs.saltstack.com/en/latest/ref/states/all/salt.states.service.html
+
+logstash-service:
+
+
 
 {% set kibana_port = salt['pillar.get']('kibana:httpport', '8080') %}
 {% set elastic_port = salt['pillar.get']('elasticsearch:httpport', '9200') %}
