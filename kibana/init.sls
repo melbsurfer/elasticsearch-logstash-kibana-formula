@@ -22,16 +22,20 @@ logstash-repo:
 
 elk-pkgs:
  pkg.installed:
-   - names:
+   - pkgs:
      - elasticsearch
      - logstash
-     - filebeat
-   - sources:
-      - filebeat: https://download.elastic.co/beats/filebeat/filebeat-1.1.2-x86_64.rpm
    - require:
      - pkgrepo: elastic-repo
      - pkgrepo: logstash-repo
      - file: elk-repo-gpg-key
+
+filebeat-pkg:
+  pkg.installed:
+    - sources:
+      - filebeat: https://download.elastic.co/beats/filebeat/filebeat-1.1.2-x86_64.rpm
+    - require:
+      - file: elk-repo-gpg-key
 
 # kibana:
 #   archive.extracted:
