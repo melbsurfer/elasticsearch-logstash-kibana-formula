@@ -1,7 +1,7 @@
 elk-repo-gpg-key:
   file.managed:
     - name: /etc/pki/rpm-gpg/GPG-KEY-elasticsearch
-    - source: {{ logstash_gpg_key_url }}
+    - source: {{ pillar['logstash_gpg_key_url'] }}
     - source_hash: md5=41c14e54aa0d201ae680bb34c199be98
 
 elastic-repo:
