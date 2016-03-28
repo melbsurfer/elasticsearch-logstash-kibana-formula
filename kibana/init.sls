@@ -1,14 +1,14 @@
 elk-repo-gpg-key:
   file.managed:
     - name: /etc/pki/rpm-gpg/GPG-KEY-elasticsearch
-    - source: https://packages.elastic.co/GPG-KEY-elasticsearch
+    - source: {{ logstash_gpg_key_url }}
     - source_hash: md5=41c14e54aa0d201ae680bb34c199be98
 
 elastic-repo:
   pkgrepo.managed:
     - humanname: Elasticsearch
     - name: elasticsearch
-    - baseurl: https://packages.elastic.co/elasticsearch/2.x/centos
+    - baseurl: {{ elastic_repo_url }}
     - gpgcheck: 1
     - gpgkey: file:///etc/pki/rpm-gpg/GPG-KEY-elasticsearch
 
@@ -16,7 +16,7 @@ logstash-repo:
   pkgrepo.managed:
     - humanname: Logstash
     - name: logstash
-    - baseurl: http://packages.elastic.co/logstash/2.2/centos
+    - baseurl: {{ logstash_repo_url }}
     - gpgcheck: 1
     - gpgkey: file:///etc/pki/rpm-gpg/GPG-KEY-elasticsearch
 
