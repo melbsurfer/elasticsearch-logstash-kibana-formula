@@ -2,7 +2,7 @@
 {% set logstash_repo_url = salt['pillar.gat']('logstash_repo_url', 'http://packages.elastic.co/logstash/2.2/centos')
 {% set elastic_repo_url = salt['pillar.get']('elastic_repo_url', 'https://packages.elastic.co/elasticsearch/2.x/centos')
 {% set kibana_download_url = salt['pillar.get']('kibana_download_url', 'https://download.elastic.co/kibana/kibana/kibana-4.4.1-linux-x64.tar.gz')
-
+{% set filebeat_repo_url = salt['pillar.get']('filebeat_download_url',' https://download.elastic.co/beats/filebeat/filebeat-1.1.2-x86_64.rpm') 
 
 elk-repo-gpg-key:
   file.managed:
@@ -39,8 +39,7 @@ elk-pkgs:
 filebeat-pkg:
   pkg.installed:
     - sources:
-      # @TODO Pillarize this
-      - filebeat: https://download.elastic.co/beats/filebeat/filebeat-1.1.2-x86_64.rpm
+      - filebeat: {{ filebeat_download_url }}
     - require:
       - file: elk-repo-gpg-key
 
