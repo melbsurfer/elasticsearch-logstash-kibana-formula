@@ -1,14 +1,14 @@
 elk-repo-gpg-key:
   file.managed:
     - name: /etc/pki/rpm-gpg/GPG-KEY-elasticsearch
-    - source: {{ pillar['logstash_gpg_key_url'] }}
-    - source_hash: md5=41c14e54aa0d201ae680bb34c199be98
+    - source: {{ pillar['elk_gpg_key_url'] }}
+    - source_hash: {{ pillar['elk_gpg_key_hash']}}
 
 elastic-repo:
   pkgrepo.managed:
     - humanname: Elasticsearch
     - name: elasticsearch
-    - baseurl: {{ elastic_repo_url }}
+    - baseurl: {{ pillar['elastic_repo_url'] }}
     - gpgcheck: 1
     - gpgkey: file:///etc/pki/rpm-gpg/GPG-KEY-elasticsearch
 
@@ -16,7 +16,7 @@ logstash-repo:
   pkgrepo.managed:
     - humanname: Logstash
     - name: logstash
-    - baseurl: {{ logstash_repo_url }}
+    - baseurl: {{ pillar['logstash_repo_url'] }}
     - gpgcheck: 1
     - gpgkey: file:///etc/pki/rpm-gpg/GPG-KEY-elasticsearch
 
@@ -37,9 +37,10 @@ filebeat-pkg:
     - require:
       - file: elk-repo-gpg-key
 
-# kibana:
-#   archive.extracted:
-#     - name: 
-#     - source: https://download.elasticsearch.org/kibana/kibana/kibana-3.0.1.tar.gz
-#     - archive_format: tar
-#     - tar_options: xf
+kibana:
+  archive.extracted:
+    - name: /tmp/kibana
+    - source: {{ pillar['kibana_download_url'] }}
+    - source_hash: md5=bb52377494d4cd8aef0885f76f9a7b2e
+    - archive_format: tar
+    - tar_options: xf
