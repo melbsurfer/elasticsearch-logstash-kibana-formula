@@ -4,6 +4,11 @@
 {% set kibana_repo_url = salt['pillar.get']('kibana_repo_url', 'http://packages.elastic.co/kibana/4.4/centos') %}
 {% set filebeat_download_url = salt['pillar.get']('filebeat_download_url',' https://download.elastic.co/beats/filebeat/filebeat-1.1.2-x86_64.rpm') %} 
 
+java-jdk-install:
+  pkg.installed:
+    - pkgs:
+      - java-1.8.0-openjdk
+
 elk-repo-gpg-key:
   file.managed:
     - name: /etc/pki/rpm-gpg/GPG-KEY-elasticsearch
@@ -62,3 +67,41 @@ filebeat-pkg:
     - require:
       - file: elk-repo-gpg-key
 
+elasticsearch-service:
+  service.running:
+    - name: elasticsearch
+    - enable: True
+    - require:
+      - pkg: java-jdk-install
+      - pkg: elk-pkgs
+
+logstash-service:
+  service.running:
+    - name: logstash
+    - enable: True
+    - require:
+      - pkg: java-jdk-install
+      - pkg: elk-pkgs
+
+kibana-service:
+  service.running:
+    - name: kibana
+    - enable: True
+    - require:
+      - pkg: java-jdk-install
+      - pkg: elk-pkgs
+
+filebeat-service:
+  service.running:
+    - name: filebeat
+    - enable: True
+    - require:
+      - pkg: java-jdk-install
+      - pkg: elk-pkgs
+
+#@TODO
+#firewall
+# add nginx
+# ports:
+#  elasticsearch: localhost:9200
+#  logstash: localhost:5601
