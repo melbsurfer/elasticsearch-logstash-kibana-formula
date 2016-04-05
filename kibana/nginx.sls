@@ -58,6 +58,7 @@ firewalld-running:
   service.running:
     - name: firewalld
     - enable: true
+    - watch_in: public
 # Open the firewall to allow http traffic
 public:
   firewalld.present:
@@ -66,7 +67,4 @@ public:
     - ports:
       - 80/tcp    
       - 443/tcp
-    - require:
-      - service: firewalld-running
-
 

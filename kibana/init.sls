@@ -91,41 +91,35 @@ kibana-service:
       - pkg: java-jdk-install
       - pkg: elk-pkgs
 
-logstash-beats-conf:
-  file.managed:
-    - name: /etc/logstash/conf.d/02-beats-input.conf
-    - source: salt://elk/logstash-beats-input.conf
-    - require:
-      - pkg: elk-pkgs
-    - template: jinja
+#logstash-beats-conf:
+#  file.managed:
+#    - name: /etc/logstash/conf.d/02-beats-input.conf
+#    - source: salt://elk/logstash-beats-input.conf
+#    - require:
+#      - pkg: elk-pkgs
+#    - template: jinja
+#
+#logstash-audit-filter-conf:
+#  file.managed:
+#    - name: /etc/logstash/conf.d/10-auditlog-filter.conf
+#    - source: salt://elk/logstash-auditlog-filter.conf
+#    - require:
+#      - pkg: elk-pkgs
+#    - template: jinja
+#
+#logstash-elasticsearch-out-conf:
+#  file.managed:
+#    - name: /etc/logstash/conf.d/30-elasticsearch-output.conf
+#    - source: salt://elk/logstash-elasticsearch-out.conf
+#    - require:
+#      - pkg: elk-pkgs
+#    - template: jinja
+#
+#filebeat-service:
+#  service.running:
+#    - name: filebeat
+#    - enable: True
+#    - require:
+#      - pkg: java-jdk-install
+#      - pkg: elk-pkgs
 
-logstash-audit-filter-conf:
-  file.managed:
-    - name: /etc/logstash/conf.d/10-auditlog-filter.conf
-    - source: salt://elk/logstash-auditlog-filter.conf
-    - require:
-      - pkg: elk-pkgs
-    - template: jinja
-
-logstash-elasticsearch-out-conf:
-  file.managed:
-    - name: /etc/logstash/conf.d/30-elasticsearch-output.conf
-    - source: salt://elk/logstash-elasticsearch-out.conf
-    - require:
-      - pkg: elk-pkgs
-    - template: jinja
-
-filebeat-service:
-  service.running:
-    - name: filebeat
-    - enable: True
-    - require:
-      - pkg: java-jdk-install
-      - pkg: elk-pkgs
-
-#@TODO
-#firewall
-# add nginx
-# ports:
-#  elasticsearch: localhost:9200
-#  logstash: localhost:5601
