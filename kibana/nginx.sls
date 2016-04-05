@@ -57,14 +57,16 @@ start-nginx:
 firewalld-running:
   service.running:
     - name: firewalld
-    - enable: true
-    - watch_in: public
+    - enable: True
+    - reload: True
+
 # Open the firewall to allow http traffic
-public:
+public-zone:
   firewalld.present:
+    - name: public
     - services:
       - http
     - ports:
       - 80/tcp    
-      - 443/tcp
+      #- 443/tcp
 
