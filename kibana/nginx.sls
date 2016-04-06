@@ -58,10 +58,7 @@ firewalld-running:
   service.running:
     - name: firewalld
     - enable: True
-    - reload: True
     - watch:
-      - firewalld: public-zone
-    - require:
       - firewalld: public-zone
 
 # Open the firewall to allow http traffic
