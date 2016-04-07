@@ -26,3 +26,11 @@ filebeat-service:
     - require:
       - pkg: java-jdk-install
 
+filebeat-conf:
+  file.managed:
+    - name: /etc/filebeat/filebeat.yml
+    - source: salt://elk/filebeat.yml
+    - require:
+      - pkg: filebeat-pkg
+    - template: jinja
+
